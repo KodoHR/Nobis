@@ -361,12 +361,21 @@
 
 <script>
 /* ============================================================
-   Para que las respuestas lleguen SOLAS por mail (sin que la
-   persona tenga que abrir nada), creá un form gratis en
-   https://formspree.io apuntando a info@kodohr.com, copiá el
-   ID del form (termina en algo como "xzzednyk") y pegalo acá:
+   Envío automático por mail — método "legacy" de Formspree,
+   SIN crear cuenta: el destino es directamente el mail de abajo.
+
+   La PRIMERA vez que alguien envíe el cuestionario, Formspree le
+   va a mandar un mail a DEST_EMAIL pidiendo confirmar que querés
+   recibir respuestas de este formulario ("I want to receive
+   submissions from this form"). Alguien tiene que entrar a esa
+   casilla y hacer click en confirmar UNA sola vez — después de
+   eso, todas las respuestas siguientes llegan solas, sin que
+   nadie tenga que volver a tocar nada.
+
+   Recomendación: antes de mandarle el link a Joana o Majo, hacé
+   vos misma un envío de prueba completando el cuestionario, así
+   confirmás el mail y ya queda activo para cuando ellas respondan.
 ============================================================ */
-const FORMSPREE_ID = "TU_FORM_ID_ACA";
 const DEST_EMAIL = "info@kodohr.com";
 
 const BLOCKS = [
@@ -415,7 +424,7 @@ const BLOCKS = [
     ]},
 ];
 
-const state = { name: '', answers: {}, scores: {} };
+const state = { name: '', answers: {}, scores: {}, scoreJustif: {} };
 
 function checkNameInput(){
   const val = document.getElementById('nameInput').value.trim();
@@ -457,6 +466,10 @@ BLOCKS.forEach(block => {
         <div class="score-row" id="score-${block.score}">
           ${[1,2,3,4,5].map(n=>`<button type="button" class="score-btn" onclick="selectScore('${block.score}', ${n}, this)">${n}</button>`).join('')}
         </div>
+      </div>
+      <div class="qgroup">
+        <label for="justif-${block.score}">Contanos un ejemplo real que justifique ese puntaje</label>
+        <textarea id="justif-${block.score}" oninput="state.scoreJustif['${block.score}']=this.value"></textarea>
       </div>`;
   }
 
@@ -523,7 +536,8 @@ function compileText(){
       out += `${state.answers[q.id] && state.answers[q.id].trim() ? state.answers[q.id].trim() : '(sin respuesta)'}\n\n`;
     });
     if(block.score){
-      out += `Puntaje (1-5) — ${AXIS_LABEL[block.score]}: ${state.scores[block.score] || '(sin puntuar)'}\n\n`;
+      out += `Puntaje (1-5) — ${AXIS_LABEL[block.score]}: ${state.scores[block.score] || '(sin puntuar)'}\n`;
+      out += `Justificación: ${state.scoreJustif[block.score] && state.scoreJustif[block.score].trim() ? state.scoreJustif[block.score].trim() : '(sin respuesta)'}\n\n`;
     }
     out += `${'─'.repeat(40)}\n\n`;
   });
@@ -572,24 +586,19 @@ async function sendResponses(){
   const btn = document.getElementById('sendBtn');
   const text = compileText();
 
-  if(!FORMSPREE_ID || FORMSPREE_ID === "TU_FORM_ID_ACA"){
-    showToast('Envío automático no configurado todavía — se abre tu mail como respaldo.', true);
-    openMailFallback();
-    return;
-  }
-
   btn.disabled = true;
   btn.textContent = 'Enviando...';
 
   try{
-    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+    const formData = new FormData();
+    formData.append('name', state.name);
+    formData.append('_subject', `Autodiagnóstico de liderazgo — ${state.name}`);
+    formData.append('message', text);
+
+    const res = await fetch(`https://formspree.io/${DEST_EMAIL}`, {
       method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: state.name,
-        subject: `Autodiagnóstico de liderazgo — ${state.name}`,
-        message: text
-      })
+      headers: { 'Accept': 'application/json' },
+      body: formData
     });
 
     if(res.ok){
