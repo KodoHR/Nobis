@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kodo HR — Autodiagnóstico de Liderazgo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F8F0DD;
+    --navy:#0C3A52;
+    --lavender:#ABA6EA;
+    --lavender-deep:#8f88d9;
+    --lime:#DCEF3E;
+    --orange:#F2A65A;
+    --ink:#14171C;
+    --grey:#414850;
+    --line: rgba(12,58,82,0.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    font-family:'Poppins', Arial, sans-serif;
+    color:var(--ink);
+  }
+  .grid-bg{
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+
+  /* ============ LANDING ============ */
+  #landing section{padding:64px 0;}
+
+  .hero{
+    min-height:78vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:60px 24px;
+  }
+  .hero .brand{font-weight:900; font-size:15px; color:var(--navy); letter-spacing:1px; margin-bottom:22px;}
+  .hero .tag{
+    display:inline-block;
+    align-self:center;
+    background:var(--lime);
+    color:var(--ink);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:6px 18px;
+    border-radius:100px;
+    margin-bottom:20px;
+  }
+  .hero h1{
+    font-size:clamp(32px,6vw,54px);
+    font-weight:800;
+    color:var(--navy);
+    text-transform:uppercase;
+    margin:0 0 16px;
+    line-height:1.1;
+  }
+  .hero p{
+    font-size:16px;
+    color:var(--grey);
+    max-width:520px;
+    margin:0 auto;
+    line-height:1.6;
+  }
+  .scroll-hint{margin-top:36px; font-size:12px; font-weight:600; color:var(--lavender-deep);}
+
+  .section-eyebrow{
+    display:inline-block;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin-bottom:14px;
+  }
+  .section-title{
+    font-size:clamp(26px,4vw,36px);
+    font-weight:800;
+    color:var(--navy);
+    text-transform:uppercase;
+    margin:0 0 18px;
+    line-height:1.15;
+  }
+  .section-body p{
+    font-size:15.5px;
+    color:var(--grey);
+    line-height:1.65;
+    margin:0 0 14px;
+  }
+  .section-body strong{color:var(--navy);}
+
+  .ejes-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    margin-top:26px;
+  }
+  .eje-mini{
+    background:#fffaf0;
+    border:2px solid var(--navy);
+    border-radius:18px;
+    padding:20px;
+  }
+  .eje-mini .tag2{
+    display:inline-block;
+    font-weight:700;
+    font-size:10.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:3px 12px;
+    border-radius:100px;
+    margin-bottom:10px;
+  }
+  .eje-mini:nth-child(1) .tag2{background:var(--lavender); color:var(--ink);}
+  .eje-mini:nth-child(2) .tag2{background:var(--lime); color:var(--ink);}
+  .eje-mini:nth-child(3) .tag2{background:var(--orange); color:var(--ink);}
+  .eje-mini:nth-child(4) .tag2{background:var(--navy); color:var(--cream);}
+  .eje-mini h4{margin:0 0 6px; font-size:15px; color:var(--navy); font-weight:700;}
+  .eje-mini p{margin:0; font-size:12.5px; color:var(--grey); line-height:1.4;}
+
+  .confid-box{
+    background:var(--navy);
+    color:var(--cream);
+    border-radius:22px;
+    padding:34px 32px;
+    margin-top:10px;
+  }
+  .confid-box h4{margin:0 0 10px; font-size:16px; font-weight:700; color:var(--lime); text-transform:uppercase;}
+  .confid-box p{margin:0; font-size:14.5px; color:#dfe9ec; line-height:1.6;}
+
+  /* start card */
+  .start-card{
+    background:#fffaf0;
+    border:2px solid var(--navy);
+    border-radius:26px;
+    padding:40px 36px;
+    text-align:center;
+    box-shadow:10px 10px 0 var(--lavender);
+  }
+  .start-card h3{font-size:22px; font-weight:800; color:var(--navy); text-transform:uppercase; margin:0 0 10px;}
+  .start-card p{font-size:14px; color:var(--grey); margin:0 0 24px;}
+  .start-card input{
+    width:100%;
+    max-width:360px;
+    padding:13px 16px;
+    border-radius:100px;
+    border:1.8px solid var(--navy);
+    font-family:'Poppins', Arial, sans-serif;
+    font-size:14.5px;
+    margin-bottom:18px;
+    text-align:center;
+  }
+  .start-card input:focus{outline:none; box-shadow:0 0 0 3px rgba(171,166,234,0.5);}
+
+  .btn{
+    font-family:'Poppins', Arial, sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 30px;
+    border-radius:100px;
+    border:2px solid var(--navy);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .btn-primary{background:var(--navy); color:var(--lime);}
+  .btn-primary:hover{opacity:0.9;}
+  .btn-primary:disabled{opacity:0.35; cursor:not-allowed;}
+  .btn-ghost{background:transparent; color:var(--navy);}
+  .btn-ghost:hover{background:#f1ecff;}
+  .btn-secondary{background:var(--lime); color:var(--ink); border-color:var(--navy);}
+  .btn-outline{background:#fff; color:var(--navy);}
+
+  .footer-mini{
+    text-align:center;
+    padding:30px 0 50px;
+    font-size:12px;
+    color:var(--grey);
+    font-weight:600;
+  }
+
+  /* ============ QUIZ APP ============ */
+  #quizApp{display:none; min-height:100vh; padding:28px 16px; align-items:center; justify-content:center;}
+  #quizApp.active{display:flex;}
+  .app{width:100%; max-width:720px;}
+
+  .topbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+  .brand-mini{font-weight:900; font-size:15px; color:var(--navy); letter-spacing:0.5px;}
+  .step-label{font-size:12px; font-weight:600; color:var(--lavender-deep);}
+  .progress-track{width:100%; height:8px; background:#fff; border:1.5px solid var(--navy); border-radius:100px; overflow:hidden; margin-bottom:30px;}
+  .progress-fill{height:100%; background:var(--navy); width:0%; transition:width 0.35s ease;}
+
+  .card{
+    background:#fffaf0;
+    border:2px solid var(--navy);
+    border-radius:26px;
+    padding:38px 36px;
+    min-height:360px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:10px 10px 0 var(--lavender);
+  }
+  .tag{display:inline-block; font-weight:700; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; padding:5px 14px; border-radius:100px; margin-bottom:16px; align-self:flex-start;}
+  .tag.c-lavender{background:var(--lavender); color:var(--ink);}
+  .tag.c-lime{background:var(--lime); color:var(--ink);}
+  .tag.c-navy{background:var(--navy); color:var(--cream);}
+  .tag.c-orange{background:var(--orange); color:var(--ink);}
+
+  .card h2{font-size:26px; font-weight:800; color:var(--navy); margin:0 0 10px; text-transform:uppercase; line-height:1.15;}
+  .card .lead{font-size:14.5px; color:var(--grey); margin:0 0 22px; line-height:1.55;}
+  .card .lead strong{color:var(--navy);}
+
+  .qgroup{margin-bottom:22px;}
+  .qgroup label{display:block; font-weight:600; font-size:14.5px; color:var(--navy); margin-bottom:8px; line-height:1.4;}
+  .qgroup textarea{
+    width:100%; min-height:80px; border-radius:14px; border:1.6px solid #cfc6a8;
+    background:#fff; padding:12px 14px; font-family:'Poppins', Arial, sans-serif;
+    font-size:14px; color:var(--ink); resize:vertical;
+  }
+  .qgroup textarea:focus{outline:none; border-color:var(--navy);}
+
+  .score-hint{font-size:11.5px; color:var(--grey); margin-top:6px; font-style:italic;}
+  .score-row{display:flex; gap:10px; margin-top:10px;}
+  .score-btn{width:44px; height:44px; border-radius:50%; border:2px solid var(--navy); background:#fff; color:var(--navy); font-weight:700; font-size:15px; cursor:pointer; transition:all .15s ease;}
+  .score-btn:hover{background:#f1ecff;}
+  .score-btn.selected{background:var(--navy); color:var(--lime);}
+
+  .nav-row{display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:18px;}
+  .btn-ghost:disabled{opacity:0; cursor:default; pointer-events:none;}
+
+  .review-box{
+    background:#fff; border:1.6px solid #cfc6a8; border-radius:16px; padding:16px 18px;
+    max-height:320px; overflow-y:auto; font-size:12.5px; line-height:1.6; color:var(--grey);
+    white-space:pre-wrap; font-family:'Poppins', Arial, sans-serif; margin-bottom:18px;
+  }
+  .send-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .send-row .btn{flex:1 1 auto; text-align:center;}
+  .toast{margin-top:12px; font-size:12.5px; color:var(--navy); font-weight:600; display:none;}
+  .toast.error{color:#b3452c;}
+
+  .step{display:none;}
+  .step.active{display:flex; flex-direction:column; flex:1;}
+
+  @media (max-width:600px){
+    .ejes-grid{grid-template-columns:1fr;}
+    .card{padding:28px 22px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================= LANDING ======================= -->
+<div id="landing" class="grid-bg">
+
+  <div class="hero">
+    <div class="brand">KODO HR</div>
+    <span class="tag">Programa de Liderazgo Individual — Nobis</span>
+    <h1>Autodiagnóstico de liderazgo</h1>
+    <p>Antes de nuestro primer encuentro, nos gustaría conocerte un poco. Este cuestionario te va a llevar unos 15-20 minutos.</p>
+    <div class="scroll-hint">↓ Contanos un poco más antes de arrancar</div>
+  </div>
+
+  <section>
+    <div class="wrap section-body">
+      <span class="section-eyebrow">Kodo HR.</span>
+      <h2 class="section-title">Cómo pensamos el liderazgo</h2>
+      <p>No lo entendemos solo como <strong>"tener gente a cargo"</strong>. Para nosotras, liderar se juega en cuatro frentes al mismo tiempo — con una misma, con el equipo, con los pares, y con quienes están arriba — y el primero de todos (cómo te lideras a vos misma) es la base que sostiene a los otros tres.</p>
+      <p>Este cuestionario recorre esos cuatro frentes, además de conocerte a vos y a tu rol. No hay respuestas correctas o incorrectas: cuanto más real y concreto seas, mejor va a ser el proceso que armemos juntas.</p>
+
+      <div class="ejes-grid">
+        <div class="eje-mini">
+          <span class="tag2">Eje 01</span>
+          <h4>Autoliderazgo</h4>
+          <p>Cómo te conocés y te sostenés a vos misma bajo presión.</p>
+        </div>
+        <div class="eje-mini">
+          <span class="tag2">Eje 02</span>
+          <h4>Liderar a tu equipo</h4>
+          <p>Cómo delegás, das feedback y acompañás a tu gente.</p>
+        </div>
+        <div class="eje-mini">
+          <span class="tag2">Eje 03</span>
+          <h4>Liderar con tus pares</h4>
+          <p>Cómo construís acuerdos más allá de tu equipo directo.</p>
+        </div>
+        <div class="eje-mini">
+          <span class="tag2">Eje 04</span>
+          <h4>Liderar hacia arriba</h4>
+          <p>Cómo te comunicás y pedís lo que necesitás a tu líder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="confid-box">
+        <h4>Un espacio confidencial</h4>
+        <p>Todo lo que compartas acá es un espacio cuidado. Le compartimos a Carolina avances generales mes a mes, pero nunca transcribimos textualmente lo que nos cuentes. Este es un espacio para pensar con honestidad, sin la presión del día a día.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="start-card">
+        <h3>¿Arrancamos?</h3>
+        <p>Contanos tu nombre para empezar</p>
+        <input type="text" id="nameInput" placeholder="Nombre y apellido" oninput="checkNameInput()">
+        <br>
+        <button class="btn btn-primary" id="startBtn" disabled onclick="startQuiz()">Comenzar cuestionario</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-mini">Kodo HR · www.kodohr.com.ar</div>
+</div>
+
+<!-- ======================= QUIZ APP ======================= -->
+<div id="quizApp" class="grid-bg">
+  <div class="app">
+    <div class="topbar">
+      <div class="brand-mini">KODO HR</div>
+      <div class="step-label" id="stepLabel">Paso 1 de 9</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="card" id="cardWrap">
+
+      <!-- REVIEW (placeholder position; block steps inserted before it by JS) -->
+      <div class="step" data-step="review">
+        <span class="tag c-lime">Último paso</span>
+        <h2>Revisá y enviá</h2>
+        <p class="lead">Al enviar, tus respuestas se mandan directo a Kodo HR. Si algo falla, se te va a abrir tu mail con todo prearmado como respaldo.</p>
+        <div class="review-box" id="reviewBox"></div>
+        <div class="send-row">
+          <button class="btn btn-primary" id="sendBtn" onclick="sendResponses()">✉ Enviar respuestas</button>
+          <button class="btn btn-secondary" onclick="copyAll()">Copiar todo</button>
+          <button class="btn btn-outline" onclick="downloadTxt()">Descargar .txt</button>
+        </div>
+        <div class="toast" id="toast"></div>
+        <div class="nav-row">
+          <button class="btn btn-ghost" onclick="goBack()">Atrás</button>
+          <div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Envío automático por mail — método "legacy" de Formspree,
+   SIN crear cuenta: el destino es directamente el mail de abajo.
+
+   La PRIMERA vez que alguien envíe el cuestionario, Formspree le
+   va a mandar un mail a DEST_EMAIL pidiendo confirmar que querés
+   recibir respuestas de este formulario ("I want to receive
+   submissions from this form"). Alguien tiene que entrar a esa
+   casilla y hacer click en confirmar UNA sola vez — después de
+   eso, todas las respuestas siguientes llegan solas, sin que
+   nadie tenga que volver a tocar nada.
+
+   Recomendación: antes de mandarle el link a Joana o Majo, hacé
+   vos misma un envío de prueba completando el cuestionario, así
+   confirmás el mail y ya queda activo para cuando ellas respondan.
+============================================================ */
+const DEST_EMAIL = "info@kodohr.com";
+
+const BLOCKS = [
+  { id:'b1', tag:'Bloque 1', color:'c-lavender', title:'Sobre vos', lead:'', questions:[
+      {id:'q1', text:'Contanos brevemente tu historia en Nobis: ¿cómo llegaste al puesto que ocupás hoy?'},
+      {id:'q2', text:'¿Qué es lo que más te gusta de tu rol? ¿Y lo que más te cuesta?'},
+      {id:'q3', text:'Si tuvieras que describir en una frase cómo te sentís hoy en tu día a día, ¿cuál sería?'},
+    ]},
+  { id:'b2', tag:'Bloque 2', color:'c-lime', title:'Tu rol y tus tareas principales', lead:'', questions:[
+      {id:'q4', text:'¿Cuáles dirías que son las 5-6 tareas que más ocupan tu semana?'},
+      {id:'q5', text:'¿Con qué áreas o personas interactuás más seguido, además de tu equipo directo?'},
+      {id:'q6', text:'¿Hay algo que hacés hoy que sentís que no está reflejado en tu descripción de puesto formal?'},
+      {id:'q7', text:'Si pudieras sacarte de encima una tarea hoy mismo, ¿cuál sería y por qué?'},
+      {id:'q8', text:'¿Cómo te llevás con las herramientas y sistemas digitales que usás en tu rol? ¿Hay algo ahí que sientas que te cuesta más que al resto?'},
+    ]},
+  { id:'b3', tag:'Bloque 3', color:'c-navy', title:'Principales dolores del rol hoy', lead:'', questions:[
+      {id:'q9', text:'¿Qué situación te genera más desgaste o frustración en el día a día?'},
+      {id:'q10', text:'¿Hay algo que necesitás hoy y no tenés (tiempo, herramientas, apoyo, información)?'},
+      {id:'q11', text:'Pensando en los últimos 3 meses, ¿hubo algún momento particularmente difícil? Contanos qué pasó.'},
+      {id:'q12', text:'¿Qué te gustaría que cambie en tu rol de acá a fin de año?'},
+    ]},
+  { id:'b4a', tag:'Bloque 4 · Eje 1', color:'c-lavender', title:'Autoliderazgo', score:'autoliderazgo',
+    lead:'"Liderar no es solo manejar gente — te proponemos pensarlo en 4 frentes distintos, empezando por vos misma."', questions:[
+      {id:'q13', text:'¿Qué situaciones, personas o tipos de pedidos son los que más te generan tensión o te hacen reaccionar de forma automática?'},
+      {id:'q14', text:'Cuando sentís que estás por desbordarte, ¿qué hacés en ese momento? ¿Tenés alguna forma de frenar o simplemente seguís de largo?'},
+      {id:'q15', text:'¿Qué emoción predomina en vos en un día típico de trabajo? ¿Es la que te gustaría sentir?'},
+    ]},
+  { id:'b4b', tag:'Bloque 4 · Eje 2', color:'c-lime', title:'Liderar a tu equipo', score:'equipo', lead:'', questions:[
+      {id:'q17', text:'¿Qué tan claro tenés qué podés delegar y en quién, según las fortalezas de cada persona de tu equipo?'},
+      {id:'q18', text:'Cuando alguien de tu equipo comete un error, ¿cómo reaccionás? ¿Das el feedback en el momento o lo vas dejando pasar?'},
+      {id:'q19', text:'¿Sentís que tu equipo te plantea los problemas antes de que se vuelvan grandes, o te enterás tarde? ¿Por qué creés que pasa eso?'},
+      {id:'q20', text:'¿Con qué frecuencia tenés charlas con tu equipo que no sean sobre lo operativo? ¿Cómo te gustaría que fuera esa dinámica?'},
+    ]},
+  { id:'b4c', tag:'Bloque 4 · Eje 3', color:'c-orange', title:'Liderar con tus pares', score:'pares', lead:'', questions:[
+      {id:'q22', text:'¿Con qué personas de otras áreas tenés hoy un vínculo más tenso o distante? ¿Qué creés que lo genera?'},
+      {id:'q23', text:'Cuando necesitás algo de otra área que no depende de vos, ¿cómo lo pedís? ¿Te resulta fácil o incómodo?'},
+      {id:'q24', text:'Contanos una situación reciente donde un desacuerdo con un par se haya resuelto bien (o mal) — ¿qué pasó?'},
+    ]},
+  { id:'b4d', tag:'Bloque 4 · Eje 4', color:'c-navy', title:'Liderar hacia arriba', score:'arriba', lead:'', questions:[
+      {id:'q26', text:'Cuando algo no te cierra o no estás de acuerdo con una decisión de arriba, ¿lo planteás o preferís no generar fricción?'},
+      {id:'q27', text:'¿Le pedís a Carolina lo que necesitás (tiempo, recursos, apoyo) antes de que se vuelva un problema, o esperás a que ella lo note?'},
+      {id:'q28', text:'¿Sentís que Carolina tiene visibilidad real de lo que lográs y de los desafíos que enfrentás en tu día a día? ¿Qué te gustaría que supiera y hoy no sabe?'},
+    ]},
+  { id:'close', tag:'Cierre', color:'c-lime', title:'Para terminar', lead:'', questions:[
+      {id:'q30', text:'Si pudieras elegir un solo foco para trabajar en este proceso, ¿cuál sería?'},
+    ]},
+];
+
+const state = { name: '', answers: {}, scores: {}, scoreJustif: {} };
+
+function checkNameInput(){
+  const val = document.getElementById('nameInput').value.trim();
+  document.getElementById('startBtn').disabled = val.length === 0;
+  state.name = val;
+}
+
+function startQuiz(){
+  state.name = document.getElementById('nameInput').value.trim();
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('quizApp').classList.add('active');
+  window.scrollTo(0,0);
+  showStep(0);
+}
+
+// Build step DOM for each block, inserted before the review step
+const cardWrap = document.getElementById('cardWrap');
+const reviewStep = document.querySelector('.step[data-step="review"]');
+
+BLOCKS.forEach(block => {
+  const div = document.createElement('div');
+  div.className = 'step';
+  div.dataset.step = block.id;
+
+  let qsHtml = '';
+  block.questions.forEach(q => {
+    qsHtml += `
+      <div class="qgroup">
+        <label for="${q.id}">${q.text}</label>
+        <textarea id="${q.id}" oninput="state.answers['${q.id}']=this.value"></textarea>
+      </div>`;
+  });
+
+  let scoreHtml = '';
+  if(block.score){
+    scoreHtml = `
+      <div class="qgroup">
+        <label>Del 1 al 5, ¿qué tan desarrollada sentís que tenés hoy tu capacidad de <em>${block.title.toLowerCase()}</em>?</label>
+        <div class="score-hint">1 = Es un punto muy débil hoy, me cuesta mucho &nbsp;·&nbsp; 5 = Es una fortaleza mía</div>
+        <div class="score-row" id="score-${block.score}">
+          ${[1,2,3,4,5].map(n=>`<button type="button" class="score-btn" onclick="selectScore('${block.score}', ${n}, this)">${n}</button>`).join('')}
+        </div>
+      </div>
+      <div class="qgroup">
+        <label for="justif-${block.score}">Contanos un ejemplo real que justifique ese puntaje</label>
+        <textarea id="justif-${block.score}" oninput="state.scoreJustif['${block.score}']=this.value"></textarea>
+      </div>`;
+  }
+
+  div.innerHTML = `
+    <span class="tag ${block.color}">${block.tag}</span>
+    <h2>${block.title}</h2>
+    ${block.lead ? `<p class="lead">${block.lead}</p>` : ''}
+    ${qsHtml}
+    ${scoreHtml}
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goBack()">Atrás</button>
+      <button class="btn btn-primary" onclick="goNext()">Siguiente</button>
+    </div>
+  `;
+  cardWrap.insertBefore(div, reviewStep);
+});
+
+const steps = Array.from(document.querySelectorAll('#quizApp .step'));
+
+let current = 0;
+
+function updateProgress(){
+  document.getElementById('progressFill').style.width = (current/(steps.length-1))*100 + '%';
+  document.getElementById('stepLabel').textContent = `Paso ${current+1} de ${steps.length}`;
+}
+
+function showStep(i){
+  steps.forEach(s=>s.classList.remove('active'));
+  steps[i].classList.add('active');
+  current = i;
+  updateProgress();
+  if(steps[i].dataset.step === 'review'){ renderReview(); }
+}
+
+function goNext(){ if(current < steps.length-1) showStep(current+1); window.scrollTo(0,0); }
+function goBack(){ if(current > 0) showStep(current-1); window.scrollTo(0,0); }
+
+function selectScore(axis, value, btn){
+  state.scores[axis] = value;
+  const row = btn.parentElement;
+  Array.from(row.children).forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+const AXIS_LABEL = {
+  autoliderazgo: 'Autoliderazgo',
+  equipo: 'Liderar a tu equipo',
+  pares: 'Liderar con tus pares',
+  arriba: 'Liderar hacia arriba'
+};
+
+function compileText(){
+  const date = new Date().toLocaleDateString('es-AR', { year:'numeric', month:'long', day:'numeric' });
+  let out = `AUTODIAGNÓSTICO DE LIDERAZGO\n`;
+  out += `Programa de Liderazgo Individual — Kodo HR x Nobis\n`;
+  out += `Nombre: ${state.name || '(sin especificar)'}\n`;
+  out += `Fecha: ${date}\n`;
+  out += `\n${'─'.repeat(40)}\n\n`;
+
+  BLOCKS.forEach(block => {
+    out += `${block.tag.toUpperCase()} — ${block.title.toUpperCase()}\n\n`;
+    block.questions.forEach((q, idx) => {
+      out += `${idx+1}. ${q.text}\n`;
+      out += `${state.answers[q.id] && state.answers[q.id].trim() ? state.answers[q.id].trim() : '(sin respuesta)'}\n\n`;
+    });
+    if(block.score){
+      out += `Puntaje (1-5) — ${AXIS_LABEL[block.score]}: ${state.scores[block.score] || '(sin puntuar)'}\n`;
+      out += `Justificación: ${state.scoreJustif[block.score] && state.scoreJustif[block.score].trim() ? state.scoreJustif[block.score].trim() : '(sin respuesta)'}\n\n`;
+    }
+    out += `${'─'.repeat(40)}\n\n`;
+  });
+
+  return out;
+}
+
+function renderReview(){
+  document.getElementById('reviewBox').textContent = compileText();
+}
+
+function showToast(msg, isError){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast' + (isError ? ' error' : '');
+  toast.style.display = 'block';
+  setTimeout(()=>{ toast.style.display='none'; }, 5000);
+}
+
+function copyAll(){
+  navigator.clipboard.writeText(compileText()).then(()=>{
+    showToast('¡Copiado! Ahora podés pegarlo en un mail a ' + DEST_EMAIL + '.');
+  });
+}
+
+function downloadTxt(){
+  const text = compileText();
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `autodiagnostico_${(state.name||'respuesta').replace(/\s+/g,'_')}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function openMailFallback(){
+  const subject = `Autodiagnóstico de liderazgo — ${state.name || ''}`;
+  const body = compileText();
+  window.location.href = `mailto:${DEST_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+async function sendResponses(){
+  const btn = document.getElementById('sendBtn');
+  const text = compileText();
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  try{
+    const formData = new FormData();
+    formData.append('name', state.name);
+    formData.append('_subject', `Autodiagnóstico de liderazgo — ${state.name}`);
+    formData.append('message', text);
+
+    const res = await fetch(`https://formspree.io/${DEST_EMAIL}`, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    });
+
+    if(res.ok){
+      showToast('¡Listo! Tus respuestas fueron enviadas. Muchas gracias 💚');
+      btn.textContent = '✓ Enviado';
+    } else {
+      throw new Error('Formspree error');
+    }
+  } catch(e){
+    showToast('No se pudo enviar automáticamente — se abre tu mail como respaldo.', true);
+    btn.disabled = false;
+    btn.textContent = '✉ Enviar respuestas';
+    openMailFallback();
+  }
+}
+</script>
+
+</body>
+</html>
