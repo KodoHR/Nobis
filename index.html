@@ -230,7 +230,8 @@
   }
   .qgroup textarea:focus{outline:none; border-color:var(--navy);}
 
-  .score-row{display:flex; gap:10px; margin-top:6px;}
+  .score-hint{font-size:11.5px; color:var(--grey); margin-top:6px; font-style:italic;}
+  .score-row{display:flex; gap:10px; margin-top:10px;}
   .score-btn{width:44px; height:44px; border-radius:50%; border:2px solid var(--navy); background:#fff; color:var(--navy); font-weight:700; font-size:15px; cursor:pointer; transition:all .15s ease;}
   .score-btn:hover{background:#f1ecff;}
   .score-btn.selected{background:var(--navy); color:var(--lime);}
@@ -462,7 +463,8 @@ BLOCKS.forEach(block => {
   if(block.score){
     scoreHtml = `
       <div class="qgroup">
-        <label>Puntuate del 1 al 5 en este eje</label>
+        <label>Del 1 al 5, ¿qué tan desarrollada sentís que tenés hoy tu capacidad de <em>${block.title.toLowerCase()}</em>?</label>
+        <div class="score-hint">1 = Es un punto muy débil hoy, me cuesta mucho &nbsp;·&nbsp; 5 = Es una fortaleza mía</div>
         <div class="score-row" id="score-${block.score}">
           ${[1,2,3,4,5].map(n=>`<button type="button" class="score-btn" onclick="selectScore('${block.score}', ${n}, this)">${n}</button>`).join('')}
         </div>
